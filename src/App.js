@@ -8,7 +8,7 @@ import ProductList from './pages/ProductList';
 import Register from './pages/Register';
 
 function App() {
-  return <Cart/>;
+  return <Register/>;
 }
 
 export default App;
