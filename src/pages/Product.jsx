@@ -174,7 +174,7 @@ const Product = () => {
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize onChange={(e)=>{setSize(e.target.value); console.log(e.target.value);}}>
+              <FilterSize onChange={(e)=>setSize(e.target.value)}>
                 <FilterSizeOption hidden>
                 Size
                 </FilterSizeOption>

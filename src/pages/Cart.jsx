@@ -5,6 +5,12 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
+import { useEffect, useState } from "react";
+import { userRequest } from "../requestMethods";
+import { useNavigate } from "react-router-dom";
+
+const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
@@ -156,6 +162,26 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector(state => state.cart);
+  const [stripeToken, setStripeToken] = useState(null);
+  const navigate = useNavigate();
+
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  useEffect(() => {
+    const makeRequest = async () => {
+      try {
+        const res = await userRequest("/checkou/payment", {
+          tokenId: stripeToken,
+          amount: cart.total * 100
+        });
+        navigate("/success");
+      } catch {
+
+      }
+    }
+  }, [stripeToken, cart.total, navigate])
   return (
     <Container>
       <Navbar />
@@ -173,7 +199,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products.map(product => (
-              <Product>
+              <Product key={product._id}>
               <ProductDetail>
                 <Image src= {product.img} />
                 <Details>
@@ -205,7 +231,7 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -217,9 +243,20 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <StripeCheckout
+              name="Besto Store"
+              image="https://avatars.githubusercontent.com/u/1486366?v=4"
+              billingAddress
+              shippingAddress
+              description={`Your total is $${cart.total}`}
+              amount={cart.total * 100}
+              token={onToken}
+              stripeKey={KEY}
+            >
+              <Button>CHECKOUT NOW</Button>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
