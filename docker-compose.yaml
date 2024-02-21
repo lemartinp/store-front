@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  store_back:
+    build: ./express/store-back
+    container_name: store_back_c
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./express/store-back:/store_back
+      - /store_back/node_modules
+  store_front:
+    build: ./react/store-front
+    container_name: store_front_c
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
