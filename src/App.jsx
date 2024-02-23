@@ -1,6 +1,7 @@
 //import { ArrowRightOutlined } from '@mui/icons-material';
 import './App.css';
 import Cart from './pages/Cart';
+import CounterTest from './pages/CounterTest';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Product from './pages/Product';
@@ -24,6 +25,7 @@ function App() {
         <Route path="/cart" element={<Cart />}/>
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />}/>
         <Route path="/register" element={user ? <Navigate to="/" /> : <Register />}/>
+        <Route path="/countertest" element={<CounterTest />}/>
       </Routes>
     </Router>
   );
