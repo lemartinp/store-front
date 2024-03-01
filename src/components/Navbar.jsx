@@ -80,12 +80,12 @@ const Navbar = () => {
                 </SearchContainer>
                 </Left>
                 <Center>
-                <Logo>LAMA.</Logo>
+                <Logo>LSHOP.</Logo>
                 </Center>
                 <Right>
                 <MenuItem>REGISTER</MenuItem>
                 <MenuItem>SIGN IN</MenuItem>
-                <Link to="/cart">
+                <Link to="/cart" name="cartLink">
                     <MenuItem>
                         <Badge badgeContent={quantity} color="primary">
                         <ShoppingCartOutlined />
